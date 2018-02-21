@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<script
+  src="http://code.jquery.com/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous"></script>
+  <script>
+  	$(document).ready(
+  		function(){
+  			var ws = new WebSocket("ws://chemnote.ru:8881");
+
+  			ws.onopen = function(){
+  				ws.send("hello");
+  			}
+
+  			ws.onmessage = function (evt) {
+  				$("#messages").append('<div>'+evt.data+'</div>');
+   				console.log(evt.data);
+			};
+
+			$("#sends").click(function(){
+				var text = $("#text").val();
+				ws.send(text);
+			})
+
+  		}
+  	)
+
+  </script>
+</head>
+<body>
+	<textarea id="text"></textarea> 
+	<button id="sends">Send</button>
+	<div id="messages"></div>
+</body>
+</html>
